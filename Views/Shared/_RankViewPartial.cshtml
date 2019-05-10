@@ -1,0 +1,56 @@
+﻿@model IEnumerable<LinkGen.ViewModel.UrlViewModel>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserApplication> SignInManager
+
+<table class="table">
+    <thead>
+        <tr>            
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th></th>
+            <th>
+                @if (SignInManager.IsSignedIn(User))
+                {
+
+                    @Html.DisplayNameFor(model => model.UrlLink)
+
+                }
+            </th>         
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>            
+            <td class="tableCustomStyleBold80">
+                <div class="parentDiv">
+                    <div class="childDiv">
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </div>
+                </div>
+            </td>
+            <td class="tableCustomStyle100">
+                @if (SignInManager.IsSignedIn(User) && item.AllowRate)
+                {
+                    <div class="tableCustomStyleMinMax">
+                        <div id="childDiv">
+                            <form asp-action="RateClick" asp-route-id="@item.UrlId" data-ajax="true" data-ajax-update="#RankViewPartial">
+                                <button type="submit" style="display: inline !important" class="btn btn-sm btn-danger d-none d-md-inline-block">
+                                    +
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </td>
+            <td>
+                <a href="@item.UrlLink" target=_blank>@item.Title</a>
+                <p class="customDescStyle">
+                    @Html.DisplayFor(modelItem => item.Desc)
+                </p>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserApplication> SignInManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>User profile</h1>
+
+
+<div id="RankViewPartial">
+    <partial name="_RankViewPartial" model="Model" />
+</div>
+
+<a asp-action="CreateUrl">Create New</a>
